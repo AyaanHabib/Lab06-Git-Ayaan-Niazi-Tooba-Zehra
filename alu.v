@@ -1,27 +1,23 @@
 `timescale 1ns / 1ps
-
-module alu(
-    input  wire [31:0] a,
-    input  wire [31:0] b,
-    input  wire [3:0]  alucontrol,
-    output reg  [31:0] aluresult,
-    output wire        zero
+module ALU(
+    input  wire [31:0] A,
+    input  wire [31:0] B,
+    input  wire [3:0]  ALUControl,
+    output reg  [31:0] ALUResult,
+    output wire        Zero
 );
-
  
-    assign zero = (aluresult == 32'b0);
-
+    assign Zero=(ALUResult==32'b0);
     always @(*) begin
-        case (alucontrol)
-            4'b0000: aluresult = a & b;          
-            4'b0001: aluresult = a | b;          
-            4'b0011: aluresult = a ^ b;         
-            4'b0010: aluresult = a + b;          
-            4'b0110: aluresult = a - b;          
-            4'b0100: aluresult = a << b[4:0];    
-            4'b0101: aluresult = a >> b[4:0];    
-            default: aluresult = 32'b0;
+        case (ALUControl)
+            4'b0000: ALUResult=A&B; //And
+            4'b0001: ALUResult=A|B; //Or
+            4'b0011: ALUResult=A^B; //Xxor
+            4'b0010: ALUResult=A+B; //Add
+            4'b0110: ALUResult=A-B; //Sub
+            4'b0100: ALUResult=A<<B[4:0]; //Sll
+            4'b0101: ALUResult=A>>B[4:0]; //Srl
+            default: ALUResult=32'b0; //Zero case
         endcase
     end
-
 endmodule
